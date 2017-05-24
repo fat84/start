@@ -6,6 +6,8 @@ use App\Categoria;
 use App\Curso;
 use App\Http\Requests\CursoRequest;
 use App\Modulo;
+use App\Order;
+use App\OrderItem;
 use App\User;
 use DevDojo\Chatter\Models\Category;
 use DevDojo\Chatter\Models\Discussion;
@@ -235,6 +237,12 @@ class CursoController extends Controller
         $curso = Curso::find($id);
         $modulo = Modulo::where('curso_id','=',$id)->get();
         return view('usuario.perfilCurso', compact('curso','modulo'));
+    }
+
+
+    public function miscursos(){
+       $suscripcion = Order::where('user_id','=',Auth::user()->id)->get();
+        return view('usuario.miscursos',compact('suscripcion'));
     }
 
 }

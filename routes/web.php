@@ -67,6 +67,7 @@ Route::resource('instructor','InstructorController');
 Route::resource('empresa','EmpresaController');
 //USUARIO
 Route::resource('usuario','EstudianteController');
+Route::get('miscursos','CursoController@miscursos');
 
 //Categorias
 Route::resource('categorias','CategoriaController');

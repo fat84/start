@@ -211,7 +211,7 @@
 
 
                 <li class="sidebar-menu-item">
-                    <a class="sidebar-menu-button" href="#">
+                    <a class="sidebar-menu-button" href="{{url('miscursos')}}">
                         <i class="sidebar-menu-icon material-icons">assignment</i> MIS CURSOS
                     </a>
                 </li>

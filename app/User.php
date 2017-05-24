@@ -35,4 +35,7 @@ class User extends Authenticatable
     public function departamento() {
         return $this->belongsTo('App\Departamento','departamento_id','id');
     }
+    public function order(){
+        return $this->hasMany('App\Order','user_id','id');
+    }
 }
