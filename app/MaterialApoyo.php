@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class MaterialApoyo extends Model
 {
-    protected $table = 'material_apoyo';
+    protected $table = 'material_apoyo_materia';
     protected $fillable = [
-        'id', 'nombre', 'material_id', 'created_at','updated_at','url'
+        'id', 'nombre', 'materia_id', 'created_at','updated_at','url'
     ];
     public function materia()
     {

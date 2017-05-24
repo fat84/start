@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Categoria;
 use App\Curso;
 use App\Http\Requests\CursoRequest;
+use App\MaterialCurso;
 use App\Modulo;
 use App\Order;
 use App\OrderItem;
@@ -243,6 +244,62 @@ class CursoController extends Controller
     public function miscursos(){
        $suscripcion = Order::where('user_id','=',Auth::user()->id)->get();
         return view('usuario.miscursos',compact('suscripcion'));
+    }
+
+    //Metodos para la carga de material de apoyo
+
+
+
+    public function materialApoyoCrear(){
+        $cursos = Curso::all();
+        $materiales_apoyo = MaterialCurso::All();
+        return view('curso.apoyoCurso',compact('cursos','materiales_apoyo'));
+    }
+    public function guardarmaterial(Request $request){
+
+        $material = new MaterialCurso();
+        $material->nombre = $request->nombre;
+        $material->curso_id = $request->curso;
+        $archivo = $request->file('archivo');
+        $file_route = time() . '_' . $archivo->getClientOriginalName();
+        Storage::disk('material')->put($file_route, file_get_contents($archivo->getRealPath()));
+        $material->url = $file_route;
+        $material->save();
+        return redirect('subirmaterialdeapoyo_curso')->with('message','Archivo anexado correctamente');
+
+    }
+
+    public function editarmaterial($id){
+        $material = MaterialCurso::find($id);
+        $curso = Curso::find($material->curso_id);
+        $cursos = Curso::whereNotIn('id', [$curso->id])->get();
+        return view('curso.editApoCurso',compact('material','curso','cursos'));
+
+    }
+
+    public function updatematerial(Request $request,$id){
+
+        $material = MaterialCurso::find($id);
+        $material->nombre = $request->nombre;
+        $material->curso_id = $request->curso;
+        $archivoAnterio = $material->url;
+        if ($request->file('archivo') == '') {
+            $material->url = $archivoAnterio;
+        } else {
+            $archivo = $request->file('archivo');
+            $file_route = time() . '_' . $archivo->getClientOriginalName();
+            Storage::disk('material')->put($file_route, file_get_contents($archivo->getRealPath()));
+            $material->url = $file_route;
+        }
+        $material->save();
+        return redirect('material_curso/'.$id.'/editar')->with('message','Material actualizado correctamente');
+
+    }
+
+    public function destroymaterial($id){
+        $material = MaterialCurso::find($id);
+        $material->delete();
+        return redirect('subirmaterialdeapoyo_curso')->with('message','Material eliminado');
     }
 
 }

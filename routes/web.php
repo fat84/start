@@ -85,6 +85,12 @@ Route::get('curso/{id}/editar','CursoController@edit');
 Route::post('editando_curso/{id}','CursoController@update');
 Route::get('eliminar_curso/{id}','CursoController@destroy');
 
+//Material de apoyo, se asocia con el curso
+Route::get('subirmaterialdeapoyo_curso','CursoController@materialApoyoCrear');
+Route::post('guardar_materialApoyo_curso','CursoController@guardarmaterial');
+Route::get('material_curso/{id}/editar','CursoController@editarmaterial');
+Route::post('editando_material_curso/{id}','CursoController@updatematerial');
+Route::get('eliminar_material_curso/{id}','CursoController@destroymaterial');
 
 //Modulo
 Route::get('modulo','ModuloController@index');
@@ -93,6 +99,13 @@ Route::post('guardar_modulo','ModuloController@store');
 Route::get('modulo/{id}/editar','ModuloController@edit');
 Route::post('editando_modulo/{id}','ModuloController@update');
 Route::get('eliminar_modulo/{id}','ModuloController@destroy');
+
+//Material de apoyo, se asocia con el modulo
+Route::get('subirmaterialdeapoyo_modulo','ModuloController@materialApoyoCrear');
+Route::post('guardar_materialApoyo_modulo','ModuloController@guardarmaterial');
+Route::get('material_modulo/{id}/editar','ModuloController@editarmaterial');
+Route::post('editando_material_modulo/{id}','ModuloController@updatematerial');
+Route::get('eliminar_material_modulo/{id}','ModuloController@destroymaterial');
 
 //Materias
 Route::get('materia','MateriaController@index');
@@ -108,6 +121,7 @@ Route::post('guardar_materialApoyo','MateriaController@guardarmaterial');
 Route::get('material/{id}/editar','MateriaController@editarmaterial');
 Route::post('editando_material/{id}','MateriaController@updatematerial');
 Route::get('eliminar_material/{id}','MateriaController@destroymaterila');
+
 //Lecciones
 Route::get('leccion','LeccionController@index');
 Route::get('new_leccion','LeccionController@newleccion');
@@ -115,6 +129,13 @@ Route::post('guardar_leccion','LeccionController@store');
 Route::get('leccion/{id}/editar','LeccionController@edit');
 Route::post('editando_leccion/{id}','LeccionController@update');
 Route::get('eliminar_leccion/{id}','LeccionController@destroy');
+
+//Material de apoyo, se asocia con la leccion
+Route::get('subirmaterialdeapoyo_leccion','LeccionController@materialApoyoCrear');
+Route::post('guardar_materialApoyo_lecciono','LeccionController@guardarmaterial');
+Route::get('material_leccion/{id}/editar','LeccionController@editarmaterial');
+Route::post('editando_material_leccion/{id}','LeccionController@updatematerial');
+Route::get('eliminar_material_leccion/{id}','LeccionController@destroymaterial');
 
 //foro
 Route::get('crear_foro','ForoController@create');

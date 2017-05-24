@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Curso;
+use App\MaterialModulo;
 use App\User;
 use App\Modulo;
 use Illuminate\Http\Request;
@@ -152,5 +153,61 @@ class ModuloController extends Controller
         // redirect
         Session::flash('message', 'Successfully deleted the nerd!');
         return Redirect::to('modulo');
+    }
+
+    //Metodos para la carga de material de apoyo
+
+
+
+    public function materialApoyoCrear(){
+        $modulos = Modulo::all();
+        $materiales_apoyo = MaterialModulo::All();
+        return view('modulo.apoyoModulo',compact('modulos','materiales_apoyo'));
+    }
+    public function guardarmaterial(Request $request){
+
+        $material = new MaterialModulo();
+        $material->nombre = $request->nombre;
+        $material->modulo_id = $request->modulo;
+        $archivo = $request->file('archivo');
+        $file_route = time() . '_' . $archivo->getClientOriginalName();
+        Storage::disk('material')->put($file_route, file_get_contents($archivo->getRealPath()));
+        $material->url = $file_route;
+        $material->save();
+        return redirect('subirmaterialdeapoyo_modulo')->with('message','Archivo anexado correctamente');
+
+    }
+
+    public function editarmaterial($id){
+        $material = MaterialModulo::find($id);
+        $modulo = Modulo::find($material->modulo_id);
+        $modulos = Modulo::whereNotIn('id', [$modulo->id])->get();
+        return view('modulo.editApoModulo',compact('material','modulo','modulos'));
+
+    }
+
+    public function updatematerial(Request $request,$id){
+
+        $material = MaterialModulo::find($id);
+        $material->nombre = $request->nombre;
+        $material->modulo_id = $request->modulo;
+        $archivoAnterio = $material->url;
+        if ($request->file('archivo') == '') {
+            $material->url = $archivoAnterio;
+        } else {
+            $archivo = $request->file('archivo');
+            $file_route = time() . '_' . $archivo->getClientOriginalName();
+            Storage::disk('material')->put($file_route, file_get_contents($archivo->getRealPath()));
+            $material->url = $file_route;
+        }
+        $material->save();
+        return redirect('material_modulo/'.$id.'/editar')->with('message','Material actualizado correctamente');
+
+    }
+
+    public function destroymaterial($id){
+        $material = MaterialModulo::find($id);
+        $material->delete();
+        return redirect('subirmaterialdeapoyo_modulo')->with('message','Material eliminado');
     }
 }

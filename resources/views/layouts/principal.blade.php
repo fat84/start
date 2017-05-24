@@ -229,9 +229,23 @@
                 </li>
 
                 <li class="sidebar-menu-item">
-                    <a class="sidebar-menu-button" href="{{url('/subirmaterialdeapoyo')}}">
-                        <i class="sidebar-menu-icon material-icons">assignment</i> MATERIAL APOYO
+                    <a class="sidebar-menu-button sidebar-js-collapse" href="#">
+                        <i class="sidebar-menu-icon material-icons">assignment</i> MATERIAL DE APOYO
                     </a>
+                    <ul class="sidebar-submenu sm-condensed">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{url('subirmaterialdeapoyo_curso')}}">MATERIAL PARA CURSOS</a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{url('subirmaterialdeapoyo_modulo')}}">MATERIAL PARA MODULOS</a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{url('subirmaterialdeapoyo')}}">MATERIAL PARA MATERIAS</a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{url('subirmaterialdeapoyo_leccion')}}">MATERIAL PARA LECCIONES</a>
+                        </li>
+                    </ul>
                 </li>
                 <!-- <li class="sidebar-menu-item">
                      <a class="sidebar-menu-button" href="#">

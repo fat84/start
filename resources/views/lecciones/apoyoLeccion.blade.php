@@ -12,14 +12,14 @@
             @endif
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="app/public/">Inicio</a></li>
-                <li class="breadcrumb-item"><a href="subirmaterialdeapoyo">Material de Apoyo</a></li>
-                <li class="breadcrumb-item active">Subir material de apoyo para Materias</li>
+                <li class="breadcrumb-item"><a href="subirmaterialdeapoyo">material de apoyo</a></li>
+                <li class="breadcrumb-item active">Subir material de apoyo para Lecciones</li>
             </ol>
 
             <div class="media">
                 <div class="media-body">
                     <h1 class="page-heading h2">
-                        Subir materia de apoyo para Materias
+                        Subir materia de apoyo para Lecciones
                     </h1>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="card-block">
 
-                            <form id="formu" name="formu" action="guardar_materialApoyo" method="post" class="form-horizontal" accept-charset="UTF-8" enctype="multipart/form-data">
+                            <form id="formu" name="formu" action="guardar_materialApoyo_lecciono" method="post" class="form-horizontal" accept-charset="UTF-8" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="form-group col-md-6">
                                     <label for="nombre"><b style="color:red;">* </b><b>Nombre</b></label>
@@ -43,12 +43,12 @@
 
 
                                 <div class="form-group col-md-6">
-                                    <label for="empresa_id"><b style="color:red;">* </b><b>Materia al que pertenece</b></label>
+                                    <label for="empresa_id"><b style="color:red;">* </b><b>Leccion al que pertenece</b></label>
 
-                                    <select name="materia" class="custom-select form-control">
-                                        <option selected disabled>Seleccione una Materia</option>
-                                        @foreach($materias as $materia)
-                                            <option value="{{$materia->id}}">{{$materia->nombre}}</option>
+                                    <select name="leccion" class="custom-select form-control">
+                                        <option selected disabled>Seleccione una Leccion</option>
+                                        @foreach($lecciones as $leccion)
+                                            <option value="{{$leccion->id}}">{{$leccion->titulo}}</option>
                                         @endforeach
                                     </select>
 
@@ -71,7 +71,7 @@
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Material de apoyo para Materias</h4>
+                            <h4 class="card-title">Material de apoyo para Lecciones</h4>
                         </div>
                         <div class="card-block">
                             <div>
@@ -81,14 +81,14 @@
                                     <thead>
                                     <tr>
                                         <th>Nombre</th>
-                                        <th>Materia</th>
+                                        <th>Leccion</th>
                                         <th>Opciones</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
                                         <th>Nombre</th>
-                                        <th>Materia</th>
+                                        <th>Leccion</th>
                                         <th>Opciones</th>
                                     </tr>
                                     </tfoot>
@@ -96,13 +96,13 @@
                                     @foreach($materiales_apoyo as $material_apoyo)
                                         <tr>
                                             <td><a href="{{url('archivos/materialapoyo/'.$material_apoyo->url)}}" download="">{{$material_apoyo->nombre}}</a></td>
-                                            <td>{{$material_apoyo->materia->nombre}}</td>
+                                            <td>{{$material_apoyo->leccion->titulo}}</td>
                                              <td>
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opciones</button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="material/{{$material_apoyo->id}}/editar">Editar</a>
-                                                        <a class="dropdown-item" href="eliminar_material/{{$material_apoyo->id}}">Eliminar</a>
+                                                        <a class="dropdown-item" href="material_leccion/{{$material_apoyo->id}}/editar">Editar</a>
+                                                        <a class="dropdown-item" href="eliminar_material_leccion/{{$material_apoyo->id}}">Eliminar</a>
                                                     </div>
                                                 </div>
                                             </td>

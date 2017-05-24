@@ -12,14 +12,14 @@
             @endif
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('app/public/')}}">Inicio</a></li>
-                <li class="breadcrumb-item"><a href="{{url('subirmaterialdeapoyo')}}">Material de Apoyo</a></li>
-                <li class="breadcrumb-item active">Editar Material para Materias</li>
+                <li class="breadcrumb-item"><a href="{{url('subirmaterialdeapoyo_leccion')}}">Material de Apoyo</a></li>
+                <li class="breadcrumb-item active">Editar Material para Lecciones</li>
             </ol>
 
             <div class="media">
                 <div class="media-body">
                     <h1 class="page-heading h2">
-                        Editar Material para Materias
+                        Editar Material para Lecciones
                     </h1>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <div class="card">
                         <div class="card-block">
 
-                            <form id="formu" name="formu" action="{{url('editando_material/'.$material->id)}}" method="post" class="form-horizontal" accept-charset="UTF-8" enctype="multipart/form-data">
+                            <form id="formu" name="formu" action="{{url('editando_material_leccion/'.$material->id)}}" method="post" class="form-horizontal" accept-charset="UTF-8" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="form-group col-md-6">
                                     <label for="nombre"><b style="color:red;">* </b><b>Nombre del material</b></label>
@@ -41,13 +41,13 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="curso_id"><b style="color:red;">* </b><b>Materia Asignada</b></label>
+                                    <label for="curso_id"><b style="color:red;">* </b><b>Leccion Asignada</b></label>
 
-                                    <select name="materia" class="custom-select form-control">
+                                    <select name="leccion" class="custom-select form-control">
 
-                                        <option selected value="{{$material->materia_id}}">{{$materia->nombre}}</option>
-                                        @foreach($materias as $materias)
-                                            <option value="{{$materias->id}}">{{$materias->nombre}}</option>
+                                        <option selected value="{{$material->leccion_id}}">{{$leccion->titulo}}</option>
+                                        @foreach($lecciones as $leccion)
+                                            <option value="{{$leccion->id}}">{{$leccion->titulo}}</option>
                                         @endforeach
                                     </select>
 
@@ -59,7 +59,7 @@
                                         <input class="btn btn-success" type="submit" value="Editar">
                                     </div>
                                     <div class="media-right media-middle">
-                                        <a class="btn btn-success" type="submit" href="{{ url('subirmaterialdeapoyo') }}">Volver</a>
+                                        <a class="btn btn-success" type="submit" href="{{ url('subirmaterialdeapoyo_leccion')}}">Volver</a>
                                     </div>
                                 </div>
 

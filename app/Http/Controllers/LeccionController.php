@@ -4,10 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Leccion;
 use App\Materia;
+use App\MaterialLeccion;
 use Illuminate\Http\Request;
 use DB;
 use App\Categoria;
 use PhpParser\Node\Stmt\Return_;
+use Auth;
+use Redirect;
+use Storage;
+use Illuminate\Support\Facades\Input;
+use Session;
+use Hash;
+use Validator;
+use Cart;
 
 class LeccionController extends Controller
 {
@@ -115,5 +124,61 @@ class LeccionController extends Controller
         $leccion->delete();
         // redirect
         return redirect('leccion')->with('message','Leccion eliminada correctamente :)');
+    }
+
+    //Metodos para la carga de material de apoyo
+
+
+
+    public function materialApoyoCrear(){
+        $lecciones = Leccion::all();
+        $materiales_apoyo = MaterialLeccion::All();
+        return view('lecciones.apoyoLeccion',compact('lecciones','materiales_apoyo'));
+    }
+    public function guardarmaterial(Request $request){
+
+        $material = new MaterialLeccion();
+        $material->nombre = $request->nombre;
+        $material->leccion_id = $request->leccion;
+        $archivo = $request->file('archivo');
+        $file_route = time() . '_' . $archivo->getClientOriginalName();
+        Storage::disk('material')->put($file_route, file_get_contents($archivo->getRealPath()));
+        $material->url = $file_route;
+        $material->save();
+        return redirect('subirmaterialdeapoyo_leccion')->with('message','Archivo anexado correctamente');
+
+    }
+
+    public function editarmaterial($id){
+        $material = MaterialLeccion::find($id);
+        $leccion = Leccion::find($material->leccion_id);
+        $lecciones = Leccion::whereNotIn('id', [$leccion->id])->get();
+        return view('lecciones.editApoLeccion',compact('material','leccion','lecciones'));
+
+    }
+
+    public function updatematerial(Request $request,$id){
+
+        $material = MaterialLeccion::find($id);
+        $material->nombre = $request->nombre;
+        $material->leccion_id = $request->leccion;
+        $archivoAnterio = $material->url;
+        if ($request->file('archivo') == '') {
+            $material->url = $archivoAnterio;
+        } else {
+            $archivo = $request->file('archivo');
+            $file_route = time() . '_' . $archivo->getClientOriginalName();
+            Storage::disk('material')->put($file_route, file_get_contents($archivo->getRealPath()));
+            $material->url = $file_route;
+        }
+        $material->save();
+        return redirect('material_leccion/'.$id.'/editar')->with('message','Material actualizado correctamente');
+
+    }
+
+    public function destroymaterial($id){
+        $material = MaterialLeccion::find($id);
+        $material->delete();
+        return redirect('subirmaterialdeapoyo_leccion')->with('message','Material eliminado');
     }
 }
