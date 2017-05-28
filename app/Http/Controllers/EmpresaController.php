@@ -7,6 +7,7 @@ use App\Departamento;
 use App\Http\Requests\AdministradorRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Redirect;
 use Auth;
 use App\Http\Requests\EmpresaRequest;
@@ -20,7 +21,38 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        //
+        $cursos = DB::table('suscripcion')
+            ->join('cursos', 'suscripcion.curso', 'cursos.id')
+            ->selectRaw('cursos.nombre as nombre, cursos.precio as precio, cursos.id as id, COUNT(suscripcion.user_id) as contador')
+            ->groupBy('cursos.id')
+            ->where('cursos.empresa_id', '=', Auth::user()->id)
+            ->get();
+
+        $contadorCurso = DB::table('cursos')->where('empresa_id', '=', Auth::user()->id)->count();
+
+        $inscritos = DB::table('suscripcion')
+            ->join('cursos', 'suscripcion.curso', 'cursos.id')
+            ->join('users', 'suscripcion.user_id', 'users.id')
+            ->selectRaw('users.name as nombre, users.apellidos as apellidos, users.documento as documento, users.tipo_documento as tipo_documento')
+            ->where('cursos.empresa_id', '=', Auth::user()->id)
+            ->get();
+
+        $contadorIns = DB::table('suscripcion')
+            ->join('cursos', 'suscripcion.curso', 'cursos.id')
+            ->join('users', 'suscripcion.user_id', 'users.id')
+            ->where('cursos.empresa_id', '=', Auth::user()->id)
+            ->count();
+
+        $recibido = DB::table('suscripcion')
+            ->join('cursos', 'suscripcion.curso', 'cursos.id')
+            ->join('users', 'suscripcion.user_id', 'users.id')
+            ->selectRaw('sum(suscripcion.pago) as dinero')
+            ->where('cursos.empresa_id', '=', Auth::user()->id)
+            ->get();
+
+
+
+        return view('empresa.index',compact('contadorCurso','cursos', 'inscritos', 'contadorIns', 'recibido'));
     }
 
     /**
@@ -118,5 +150,15 @@ class EmpresaController extends Controller
     {
         User::destroy($id);
         return redirect('empresas')->with('message', 'Empresa Eliminado correctamente');
+    }
+
+    public function cursos_empresa()
+    {
+        $cursos = DB::table('cursos')->where('empresa_id', '=', Auth::user()->id)->get();
+
+        $contadorCurso = DB::table('cursos')->where('empresa_id', '=', Auth::user()->id)->count();
+
+
+        return view('empresa.index',compact('contadorCurso','cursos'));
     }
 }

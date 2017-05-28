@@ -23,7 +23,7 @@ Route::get('/dashboard', function () {
     }elseif (Auth::check() && Auth::user()->rol == 'administrador'){
         return view('administrador.index');
     }elseif (Auth::check() && Auth::user()->rol == 'empresa'){
-        return view('empresa.index');
+        return redirect()->action('EmpresaController@index');
     }
     else{
         return view('auth.login');
@@ -33,7 +33,13 @@ Route::get('/dashboard', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+
+
+
+
+//vista de Cursos empresa
+
+
 
 //vistas de usuario
 Route::get('cursos/{nombre}/{id}','CursoController@perfilCursoUsuario');
