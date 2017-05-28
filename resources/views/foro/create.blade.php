@@ -26,7 +26,7 @@
                     <h4 class="card-title">Datos Basicos</h4>
                 </div>
                 <div class="card-block">
-                    <form action="quiz_leccion_guardar" method="post" enctype="multipart/form-data">
+                    <form action="crear_foro_general" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-group row">
                             <label for="course_title" class="col-sm-3 col-form-label"><b style="color:red;">* </b><b>Nombre del foro</b>:</label>

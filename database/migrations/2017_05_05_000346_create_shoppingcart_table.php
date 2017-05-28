@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 class CreateShoppingcartTable extends Migration
 {
     /**
@@ -16,7 +14,6 @@ class CreateShoppingcartTable extends Migration
             $table->string('instance');
             $table->longText('content');
             $table->nullableTimestamps();
-
             $table->primary(['identifier', 'instance']);
         });
     }

@@ -143,12 +143,6 @@ Route::get('material_leccion/{id}/editar','LeccionController@editarmaterial');
 Route::post('editando_material_leccion/{id}','LeccionController@updatematerial');
 Route::get('eliminar_material_leccion/{id}','LeccionController@destroymaterial');
 
-//foro
-Route::get('crear_foro','ForoController@create');
-Route::get('foros','ForoController@index');
-//Route::get('foros/curso/{slug}','ForoController@vista');
-Route::get('/foros/start/{slug}','ForoController@start');
-Route::post('/foros/agregarcomentario','ForoController@agregarcomentario');
 
 //quiz
 Route::get('nuevoquiz','QuizController@create');
